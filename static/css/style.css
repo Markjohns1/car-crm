@@ -78,32 +78,8 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-.brand-logo-container i:first-child {
+.brand-logo-container i {
     font-size: 1.2rem;
-    z-index: 2;
-}
-
-.logo-glow {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    font-size: 0.8rem;
-    filter: drop-shadow(0 0 5px rgba(255, 193, 7, 0.8));
-    animation: sparkle 2s infinite ease-in-out;
-}
-
-@keyframes sparkle {
-
-    0%,
-    100% {
-        opacity: 0.5;
-        transform: scale(1);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1.2);
-    }
 }
 
 .brand-logo-container-sm {
