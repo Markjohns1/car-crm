@@ -258,6 +258,16 @@ def get_dashboard_stats():
     week_ago = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
     month_start = datetime.now().strftime('%Y-%m-01')
     
+    # At-risk customers (haven't visited in 14+ days)
+    two_weeks_ago = (datetime.now() - timedelta(days=14)).strftime('%Y-%m-%d')
+    at_risk_count = conn.execute(
+        'SELECT COUNT(*) FROM customers WHERE last_visit < ? AND last_visit IS NOT NULL', (two_weeks_ago,)
+    ).fetchone()[0]
+    
+    # Calculate potential lost revenue (average visit price * number of at-risk customers)
+    avg_price = conn.execute('SELECT AVG(price) FROM services WHERE is_active = 1').fetchone()[0] or 350
+    lost_revenue = at_risk_count * avg_price
+
     stats = {
         'total_customers': conn.execute('SELECT COUNT(*) FROM customers').fetchone()[0],
         'visits_today': conn.execute(
@@ -274,7 +284,9 @@ def get_dashboard_stats():
         ).fetchone()[0],
         'loyalty_due': conn.execute(
             'SELECT COUNT(*) FROM customers WHERE loyalty_points >= ?', (LOYALTY_THRESHOLD,)
-        ).fetchone()[0]
+        ).fetchone()[0],
+        'at_risk_count': at_risk_count,
+        'lost_revenue': lost_revenue
     }
     conn.close()
     return stats
@@ -310,6 +322,16 @@ def dashboard():
         ORDER BY total_spent DESC 
         LIMIT 5
     ''').fetchall()
+
+    # Get at-risk customers (no visit in 14 days)
+    two_weeks_ago = (datetime.now() - timedelta(days=14)).strftime('%Y-%m-%d')
+    at_risk_customers = conn.execute('''
+        SELECT *, (julianday('now') - julianday(last_visit)) as days_gone 
+        FROM customers 
+        WHERE last_visit < ? AND last_visit IS NOT NULL
+        ORDER BY days_gone DESC
+        LIMIT 10
+    ''', (two_weeks_ago,)).fetchall()
     
     conn.close()
     
@@ -317,7 +339,8 @@ def dashboard():
         'dashboard.html',
         stats=stats,
         recent_visits=recent_visits,
-        top_customers=top_customers
+        top_customers=top_customers,
+        at_risk_customers=at_risk_customers
     )
 
 

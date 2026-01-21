@@ -13,6 +13,29 @@
     </a>
 </div>
 
+<!-- [REVENUE LEAKAGE ALERT] -->
+{% if stats.at_risk_count > 0 %}
+<div class="alert alert-danger border-0 shadow-sm mb-4">
+    <div class="d-flex align-items-center">
+        <div class="flex-shrink-0">
+            <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+        </div>
+        <div class="flex-grow-1">
+            <h5 class="alert-heading mb-1 fw-bold">Revenue Leakage Detected!</h5>
+            <p class="mb-0">
+                <strong>{{ stats.at_risk_count }}</strong> regular customers haven't visited in over 2 weeks.
+                Potential lost revenue: <span class="fw-bold text-dark">KES {{ '{:,.0f}'.format(stats.lost_revenue)
+                    }}</span>.
+            </p>
+        </div>
+        <div class="ms-auto text-end d-none d-md-block">
+            <small class="d-block text-uppercase fw-bold opacity-75">Action Required</small>
+            <span class="badge bg-white text-danger px-3 py-2 mt-1">CONTACT CUSTOMERS</span>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <!-- [SECTION] KEY PERFORMANCE METRICS -->
 <!-- Grid of cards showing total metrics (Customers, Revenue, Loyalty) -->
 <div class="row mb-4">
@@ -71,6 +94,53 @@
         </div>
     </div>
 </div>
+
+{% if at_risk_customers %}
+<!-- [SECTION] AT-RISK CUSTOMERS (ACTION LIST) -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card border-danger shadow-sm">
+            <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center py-3">
+                <h6 class="m-0 fw-bold"><i class="fas fa-phone-alt me-2"></i> Win-Back List: Customers Gone for 14+ Days
+                </h6>
+                <span class="badge bg-white text-danger fw-bold">{{ at_risk_customers|length }} CUSTOMERS</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Customer Name</th>
+                                <th>Plate Number</th>
+                                <th>Last Visit</th>
+                                <th>Days Away</th>
+                                <th class="text-end">Contact info</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for customer in at_risk_customers %}
+                            <tr>
+                                <td class="fw-bold">{{ customer['name'] }}</td>
+                                <td><span class="badge bg-secondary px-3">{{ customer['plate_number'] }}</span></td>
+                                <td class="text-muted">{{ customer['last_visit'] }}</td>
+                                <td>
+                                    <span class="text-danger fw-bold">{{ customer['days_gone']|round|int }} days</span>
+                                </td>
+                                <td class="text-end">
+                                    <a href="tel:{{ customer['phone'] }}" class="btn btn-sm btn-dark px-3">
+                                        <i class="fas fa-phone-alt me-1"></i> {{ customer['phone'] }}
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 <div class="row">
     <!-- [SECTION] RECENT ACTIVITY LOG -->
