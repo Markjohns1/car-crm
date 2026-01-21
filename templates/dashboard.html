@@ -85,29 +85,29 @@
                     <table class="table table-hover mb-0">
                         <thead>
                             <tr>
-                                <th>Time</th>
+                                <th class="d-none d-md-table-cell">Time</th>
                                 <th>Customer</th>
                                 <th>Plate</th>
-                                <th>Service</th>
+                                <th class="d-none d-md-table-cell">Service</th>
                                 <th>Amount</th>
-                                <th>Status</th>
+                                <th class="d-none d-lg-table-cell">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for visit in recent_visits %}
                             <tr>
-                                <td>{{ visit['visit_time'][:5] }}</td>
+                                <td class="d-none d-md-table-cell text-muted small">{{ visit['visit_time'][:5] }}</td>
                                 <td class="fw-bold">{{ visit['customer_name'] }}</td>
                                 <td><span class="badge bg-secondary">{{ visit['plate_number'] }}</span></td>
-                                <td>{{ visit['service_name'] }}</td>
+                                <td class="d-none d-md-table-cell small">{{ visit['service_name'] }}</td>
                                 <td>
                                     {% if visit['is_loyalty_reward'] %}
                                     <span class="text-success fw-bold">FREE</span>
                                     {% else %}
-                                    KES {{ '{:,.0f}'.format(visit['amount_paid']) }}
+                                    <span class="fw-bold">KES {{ '{:,.0f}'.format(visit['amount_paid']) }}</span>
                                     {% endif %}
                                 </td>
-                                <td><span class="badge bg-dark">Completed</span></td>
+                                <td class="d-none d-lg-table-cell"><span class="badge bg-dark">Completed</span></td>
                             </tr>
                             {% else %}
                             <tr>
@@ -136,9 +136,6 @@
                     {% for customer in top_customers %}
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <div class="d-flex align-items-center">
-                            <div class="avatar-circle me-3">
-                                {{ customer['name'][0].upper() }}
-                            </div>
                             <div>
                                 <strong>{{ customer['name'] }}</strong>
                                 <br>

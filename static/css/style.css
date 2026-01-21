@@ -25,11 +25,17 @@
 /* ============================================
    GLOBAL STYLES
    ============================================ */
+html,
+body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+}
+
 body {
     background: #f8fafc;
     font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
     color: #2d3748;
-    overflow-x: hidden;
 }
 
 /* ============================================
@@ -121,11 +127,23 @@ body {
 #content {
     flex-grow: 1;
     min-width: 0;
-    /* Prevents flex items from overflowing */
+    max-width: 100%;
+    overflow-x: hidden;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     background: #f8fafc;
+}
+
+.row {
+    margin-right: -10px;
+    margin-left: -10px;
+}
+
+.col,
+[class*="col-"] {
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 /* Collapsible Sidebar (Mini Mode) */
@@ -430,6 +448,8 @@ body {
 
     .mobile-bottom-nav {
         display: flex;
+        z-index: 2000 !important;
+        /* Extremely high to beat tables/modals */
     }
 
     .navbar {
