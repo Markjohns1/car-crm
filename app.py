@@ -2,8 +2,8 @@
 SafiWash CRM - Car Wash Customer Relationship Management System
 ================================================================
 Author: Muthomi Manasseh
-Institution: [University Name]
-Date: January 2026
+Institution: ZETECH UNIVERSITY
+Date: MARCH 2026
 
 System Overview:
 ----------------

@@ -87,7 +87,7 @@ A detailed transaction log linking customers to services with payment methods an
 
 ## Author
 **Muthomi Manasseh**
-*University Name*
-January 2026
+*ZETECH UNIVERSITY*
+MARCH 2026
 
 "Empowering Kenyan Car Wash Businesses through Data and Design."
