@@ -26,11 +26,16 @@
         {% if user %}
         <!-- Sidebar Navigation -->
         <nav id="sidebar">
-            <div class="sidebar-header">
-                <h4 class="text-white mb-1">
-                    <i class="fas fa-car me-2"></i>SafiWash
-                </h4>
-                <div class="text-muted extra-small text-uppercase fw-bold">Management Portal</div>
+            <div class="sidebar-header d-flex align-items-center py-4">
+                <div class="brand-logo-container me-3">
+                    <i class="fas fa-car-side text-white"></i>
+                    <i class="fas fa-sparkles text-warning logo-glow"></i>
+                </div>
+                <div>
+                    <h4 class="text-white mb-0 fw-bold tracking-tight">SafiWash</h4>
+                    <div class="text-primary-light extra-small text-uppercase fw-bold opacity-75"
+                        style="letter-spacing: 1px;">CRM Portal</div>
+                </div>
             </div>
 
             <ul class="list-unstyled components">
@@ -106,6 +111,15 @@
                     <button type="button" id="sidebarCollapse" class="d-none d-md-block">
                         <i class="fas fa-bars"></i>
                     </button>
+
+                    <!-- Top Bar Logo (Visible on mobile or when sidebar is collapsed) -->
+                    <div class="navbar-brand ms-3 d-flex align-items-center">
+                        <div class="brand-logo-container-sm me-2 d-md-none">
+                            <i class="fas fa-car-side text-primary"></i>
+                        </div>
+                        <span class="fw-bold d-md-none" style="letter-spacing: -0.5px;">SafiWash <span
+                                class="text-primary">CRM</span></span>
+                    </div>
 
                     <div class="ms-auto d-flex align-items-center">
                         {% if user %}

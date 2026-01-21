@@ -66,6 +66,57 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+.brand-logo-container {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary), #4a90e2);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.brand-logo-container i:first-child {
+    font-size: 1.2rem;
+    z-index: 2;
+}
+
+.logo-glow {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 0.8rem;
+    filter: drop-shadow(0 0 5px rgba(255, 193, 7, 0.8));
+    animation: sparkle 2s infinite ease-in-out;
+}
+
+@keyframes sparkle {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+.brand-logo-container-sm {
+    width: 32px;
+    height: 32px;
+    background: var(--primary-light);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+}
+
 #sidebar .components {
     padding: 20px 0;
     flex-grow: 1;
