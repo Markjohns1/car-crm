@@ -1,0 +1,4 @@
+# SafiWash CRM - Python Dependencies
+# Install using: pip install -r requirements.txt
+
+Flask==3.0.0

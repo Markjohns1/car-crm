@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Register Customer - SafiWash CRM{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6">
+        <!-- Page Header -->
+        <div class="mb-4">
+            <div class="d-flex align-items-center mb-1">
+                <a href="javascript:history.back()" class="text-muted text-decoration-none small fw-medium">
+                    <i class="fas fa-arrow-left me-1"></i> Back
+                </a>
+            </div>
+            <h2 class="mb-0">Register Customer</h2>
+            <p class="text-muted small">Add a new customer to the CRM system</p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Customer Information</h6>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label small fw-bold text-uppercase">Full Name</label>
+                            <input type="text" name="name" class="form-control" placeholder="e.g. John Doe" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-uppercase">Phone Number</label>
+                            <input type="tel" name="phone" class="form-control" placeholder="e.g. 0712345678" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold text-uppercase">Plate Number</label>
+                            <input type="text" name="plate_number" class="form-control" placeholder="e.g. KAA 123A"
+                                required>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label small fw-bold text-uppercase">Car Model (Optional)</label>
+                            <input type="text" name="car_model" class="form-control"
+                                placeholder="e.g. Toyota Fielder 2018">
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label small fw-bold text-uppercase">Internal Notes (Optional)</label>
+                            <textarea name="notes" class="form-control" rows="3"
+                                placeholder="Any specific requirements or vehicle details..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-top d-flex gap-2">
+                        <button type="submit" class="btn btn-dark px-4">
+                            <i class="fas fa-check me-1"></i> Register Customer
+                        </button>
+                        <a href="javascript:history.back()" class="btn btn-outline-secondary px-4">
+                            <i class="fas fa-times me-1"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

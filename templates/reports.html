@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block title %}Business Reports - SafiWash CRM{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="mb-4">
+    <h2 class="mb-1">Business Reports</h2>
+    <p class="text-muted small mb-0">Analysis of revenue, loyalty, and performance</p>
+</div>
+
+<div class="row">
+    <!-- Revenue Overview -->
+    <div class="col-lg-8 mb-4">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">Daily Revenue (Last 7 Days)</h6>
+                <div class="text-muted extra-small fw-bold text-uppercase">Financial Performance</div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th class="ps-4">Date</th>
+                                <th class="text-center">Visits</th>
+                                <th class="text-end pe-4">Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for day in revenue_daily %}
+                            <tr>
+                                <td class="ps-4 fw-medium">{{ day['visit_date'] }}</td>
+                                <td class="text-center">
+                                    <span class="badge bg-secondary">{{ day['visit_count'] }}</span>
+                                </td>
+                                <td class="text-end pe-4 fw-bold">KES {{ '{:,.0f}'.format(day['total_revenue']) }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center py-5 text-muted small">No data available for the
+                                    selected period.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loyalty Stats -->
+    <div class="col-lg-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Loyalty Program Stats</h6>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <div class="text-muted small text-uppercase fw-bold mb-1" style="font-size: 10px;">Eligible for
+                        Rewards</div>
+                    <div class="d-flex align-items-baseline">
+                        <span class="fs-2 fw-bold me-2">{{ loyalty_stats.eligible_count }}</span>
+                        <span class="small text-muted">customers</span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="text-muted small text-uppercase fw-bold mb-1" style="font-size: 10px;">Average Points
+                        per Customer</div>
+                    <div class="d-flex align-items-baseline">
+                        <span class="fs-4 fw-bold me-2">{{ '{:,.1f}'.format(loyalty_stats.avg_points) }}</span>
+                        <span class="small text-muted">points</span>
+                    </div>
+                </div>
+                <div class="p-3 bg-light border rounded">
+                    <div class="small fw-semibold mb-1"><i class="fas fa-info-circle me-1 opacity-50"></i>Program Info
+                    </div>
+                    <div class="extra-small text-muted" style="font-size: 11px;">
+                        Current threshold is <strong>{{ loyalty_threshold }} visits</strong> for a free wash. Points
+                        reset after redemption.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Revenue by Service -->
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="mb-0">Revenue Breakdown by Service</h6>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th class="ps-4">Service Name</th>
+                                <th class="text-center">Units Sold</th>
+                                <th class="text-end pe-4">Total Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for service in revenue_by_service %}
+                            <tr>
+                                <td class="ps-4">
+                                    <div class="fw-semibold">{{ service['service_name'] }}</div>
+                                </td>
+                                <td class="text-center">{{ service['visit_count'] }}</td>
+                                <td class="text-end pe-4 fw-bold text-dark">KES {{
+                                    '{:,.0f}'.format(service['total_revenue']) }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center py-5 text-muted small">No service data recorded yet.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

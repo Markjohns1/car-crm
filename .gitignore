@@ -1,0 +1,21 @@
+# Environment Variables (SENSITIVE)
+.env
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+ENV/
+
+# Database (Local data)
+*.db
+*.sqlite3
+
+# IDE / System files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
