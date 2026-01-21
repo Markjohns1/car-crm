@@ -385,6 +385,31 @@ body {
     box-shadow: 0 0 0 3px rgba(44, 82, 130, 0.1);
 }
 
+/* Payment Selector Cards */
+.payment-card {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid var(--border) !important;
+    background: #fff !important;
+    color: var(--gray) !important;
+}
+
+.payment-card:hover {
+    border-color: var(--primary) !important;
+    background: var(--primary-light) !important;
+}
+
+.btn-check:checked+.payment-card {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 12px rgba(44, 82, 130, 0.2);
+}
+
+.btn-check:checked+.payment-card i {
+    opacity: 1 !important;
+}
+
 /* ============================================
    RESPONSIVE
    ============================================ */
