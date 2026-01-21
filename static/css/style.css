@@ -451,12 +451,17 @@ body {
 
     .table-responsive {
         border: none !important;
-        overflow-x: auto;
+        overflow: visible !important;
     }
 
     .table tbody td {
         padding: 12px 10px !important;
         font-size: 13px !important;
+        position: relative;
+    }
+
+    .dropdown-menu {
+        z-index: 1060 !important;
     }
 
     .table thead th {
