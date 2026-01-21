@@ -437,6 +437,32 @@ body {
         padding-top: 0.6rem;
         padding-bottom: 0.6rem;
     }
+
+    /* Table & Container Freedom */
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+    }
+
+    .card-body {
+        padding: 0 !important;
+    }
+
+    .table-responsive {
+        border: none !important;
+        overflow-x: auto;
+    }
+
+    .table tbody td {
+        padding: 12px 10px !important;
+        font-size: 13px !important;
+    }
+
+    .table thead th {
+        padding: 10px 10px !important;
+        font-size: 10px !important;
+    }
 }
 
 @media (max-width: 576px) {
