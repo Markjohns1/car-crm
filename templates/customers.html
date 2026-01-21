@@ -32,11 +32,11 @@
                 <thead>
                     <tr>
                         <th class="ps-4">Customer</th>
-                        <th>Phone</th>
+                        <th class="d-none d-lg-table-cell">Phone</th>
                         <th>Plate</th>
-                        <th class="text-center">Visits</th>
-                        <th>Loyalty Progress</th>
-                        <th>Total Spent</th>
+                        <th class="text-center d-none d-md-table-cell">Visits</th>
+                        <th>Loyalty</th>
+                        <th class="d-none d-lg-table-cell">Spent</th>
                         <th class="text-end pe-4">Actions</th>
                     </tr>
                 </thead>
@@ -44,42 +44,66 @@
                     {% for customer in customers %}
                     <tr>
                         <td class="ps-4">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-circle me-3">
-                                    {{ customer['name'][0].upper() }}
-                                </div>
-                                <div>
-                                    <div class="fw-semibold">{{ customer['name'] }}</div>
-                                    {% if customer['car_model'] %}
-                                    <div class="text-muted extra-small" style="font-size: 11px;">{{
-                                        customer['car_model'] }}</div>
-                                    {% endif %}
-                                </div>
+                            <div>
+                                <div class="fw-semibold">{{ customer['name'] }}</div>
+                                {% if customer['car_model'] %}
+                                <div class="text-muted extra-small" style="font-size: 11px;">{{
+                                    customer['car_model'] }}</div>
+                                {% endif %}
                             </div>
                         </td>
-                        <td><span class="text-muted">{{ customer['phone'] }}</span></td>
+                        <td class="d-none d-lg-table-cell"><span class="text-muted">{{ customer['phone'] }}</span></td>
                         <td><span class="badge bg-secondary">{{ customer['plate_number'] }}</span></td>
-                        <td class="text-center">{{ customer['total_visits'] }}</td>
-                        <td style="min-width: 160px;">
-                            {% set progress = (customer['loyalty_points'] / loyalty_threshold) * 100 %}
+                        <td class="text-center d-none d-md-table-cell">{{ customer['total_visits'] }}</td>
+                        <td style="min-width: 80px;">
                             {% if customer['loyalty_points'] >= loyalty_threshold %}
-                            <span class="badge bg-dark">
-                                <i class="fas fa-gift me-1"></i> FREE WASH READY
+                            <span class="badge bg-success">
+                                <i class="fas fa-gift me-1"></i> {{ customer['loyalty_points'] }}/{{ loyalty_threshold
+                                }}
                             </span>
                             {% else %}
-                            <div class="progress" style="width: 120px;">
-                                <div class="progress-bar" role="progressbar" style="width: {{ progress }}%;"></div>
-                            </div>
-                            <small class="text-muted" style="font-size: 11px;">{{ customer['loyalty_points'] }}/{{
-                                loyalty_threshold }} pts</small>
+                            <span class="badge bg-warning text-dark">
+                                {{ customer['loyalty_points'] }}/{{ loyalty_threshold }}
+                            </span>
                             {% endif %}
                         </td>
-                        <td class="fw-bold">KES {{ '{:,.0f}'.format(customer['total_spent']) }}</td>
+                        <td class="fw-bold d-none d-lg-table-cell">KES {{ '{:,.0f}'.format(customer['total_spent']) }}
+                        </td>
                         <td class="text-end pe-4">
-                            <a href="{{ url_for('customer_detail', customer_id=customer['id']) }}"
-                                class="btn btn-sm btn-outline-dark" title="View Profile">
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
+                            <!-- Desktop Actions -->
+                            <div class="d-none d-md-flex justify-content-end gap-2">
+                                <a href="{{ url_for('customer_detail', customer_id=customer['id']) }}"
+                                    class="btn btn-sm btn-outline-dark" title="View Profile">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ url_for('edit_customer', customer_id=customer['id']) }}"
+                                    class="btn btn-sm btn-outline-dark" title="Edit Customer">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                                <a href="{{ url_for('checkin') }}?customer_id={{ customer['id'] }}"
+                                    class="btn btn-sm btn-dark" title="Check-In">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                            </div>
+
+                            <!-- Mobile Actions -->
+                            <div class="d-md-none dropdown">
+                                <button class="btn btn-sm btn-outline-dark" type="button" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="font-size: 14px;">
+                                    <li><a class="dropdown-item py-2"
+                                            href="{{ url_for('customer_detail', customer_id=customer['id']) }}">
+                                            <i class="fas fa-eye me-2 text-muted"></i> View Profile</a></li>
+                                    <li><a class="dropdown-item py-2"
+                                            href="{{ url_for('edit_customer', customer_id=customer['id']) }}">
+                                            <i class="fas fa-pencil-alt me-2 text-muted"></i> Edit Profile</a></li>
+                                    <li><a class="dropdown-item py-2 fw-bold"
+                                            href="{{ url_for('checkin') }}?customer_id={{ customer['id'] }}">
+                                            <i class="fas fa-plus me-2 text-primary"></i> Quick Check-In</a></li>
+                                </ul>
+                            </div>
                         </td>
                     </tr>
                     {% else %}

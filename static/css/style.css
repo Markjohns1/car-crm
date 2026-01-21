@@ -351,16 +351,7 @@ body {
    AVATARS
    ============================================ */
 .avatar-circle {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    background: var(--primary-light);
-    color: var(--primary);
-    font-size: 14px;
+    display: none !important;
 }
 
 /* ============================================
@@ -440,6 +431,11 @@ body {
 
     h2 {
         font-size: 1.5rem;
+    }
+
+    .btn {
+        padding-top: 0.6rem;
+        padding-bottom: 0.6rem;
     }
 }
 

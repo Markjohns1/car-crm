@@ -9,24 +9,29 @@
             <i class="fas fa-arrow-left me-1"></i> Back
         </a>
     </div>
-    <div class="d-flex justify-content-between align-items-end">
-        <div>
-            <h2 class="mb-0">{{ customer['name'] }}</h2>
+    <div class="row align-items-end g-3">
+        <div class="col-md-7">
+            <h2 class="mb-0 fw-bold">{{ customer['name'] }}</h2>
             <div class="text-muted small">Registered since {{ customer['joined_date'] }}</div>
         </div>
-        <div class="d-flex gap-2">
-            <a href="{{ url_for('edit_customer', customer_id=customer['id']) }}" class="btn btn-outline-dark">
-                <i class="fas fa-pencil-alt me-1"></i> Edit Profile
-            </a>
-            <form action="{{ url_for('delete_customer', customer_id=customer['id']) }}" method="POST"
-                onsubmit="return confirm('DANGER: This will permanently remove this customer and all their wash history. Proceed?');">
-                <button type="submit" class="btn btn-outline-danger">
-                    <i class="fas fa-trash-alt me-1"></i> Delete
-                </button>
-            </form>
-            <a href="{{ url_for('checkin') }}?customer_id={{ customer['id'] }}" class="btn btn-dark">
-                <i class="fas fa-plus me-1"></i> New Visit
-            </a>
+        <div class="col-md-5 text-md-end">
+            <div class="d-flex gap-2 flex-wrap justify-content-md-end">
+                <a href="{{ url_for('edit_customer', customer_id=customer['id']) }}"
+                    class="btn btn-outline-dark flex-grow-1 flex-md-grow-0 py-2">
+                    <i class="fas fa-pencil-alt me-1"></i> Edit Profile
+                </a>
+                <form action="{{ url_for('delete_customer', customer_id=customer['id']) }}" method="POST"
+                    onsubmit="return confirm('DANGER: This will permanently remove this customer and all their wash history. Proceed?');"
+                    class="flex-grow-1 flex-md-grow-0">
+                    <button type="submit" class="btn btn-outline-danger w-100 py-2">
+                        <i class="fas fa-trash-alt me-1"></i> Delete
+                    </button>
+                </form>
+                <a href="{{ url_for('checkin') }}?customer_id={{ customer['id'] }}"
+                    class="btn btn-dark flex-grow-1 flex-md-grow-0 py-2">
+                    <i class="fas fa-plus me-1"></i> New Visit
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -70,25 +75,24 @@
                 <h6 class="mb-0 small text-uppercase fw-bold">Loyalty Status</h6>
             </div>
             <div class="card-body">
-                {% set progress = (customer['loyalty_points'] / loyalty_threshold) * 100 %}
-                {% if customer['loyalty_points'] >= loyalty_threshold %}
-                <div class="p-3 bg-light border rounded text-center">
-                    <i class="fas fa-gift text-success mb-2 fs-4"></i>
-                    <div class="fw-bold small text-uppercase">Free Wash Due!</div>
-                    <div class="text-muted extra-small mt-1">Ready for redemption during next visit.</div>
+                <div class="text-center py-2">
+                    {% if customer['loyalty_points'] >= loyalty_threshold %}
+                    <div class="display-6 fw-bold text-success mb-2">{{ customer['loyalty_points'] }}/{{
+                        loyalty_threshold }}</div>
+                    <div class="badge bg-success px-3 py-2 text-uppercase letter-spacing-1">
+                        <i class="fas fa-gift me-1"></i> Free Wash Ready
+                    </div>
+                    {% else %}
+                    <div class="display-6 fw-bold text-warning mb-2">{{ customer['loyalty_points'] }}/{{
+                        loyalty_threshold }}</div>
+                    <div class="badge bg-warning text-dark px-3 py-2 text-uppercase letter-spacing-1">
+                        In Progress
+                    </div>
+                    <div class="extra-small text-muted mt-3" style="font-size: 11px;">
+                        {{ loyalty_threshold - customer['loyalty_points'] }} more regular visits for a free wash.
+                    </div>
+                    {% endif %}
                 </div>
-                {% else %}
-                <div class="mb-2 d-flex justify-content-between align-items-end">
-                    <span class="small fw-semibold text-muted">Progress</span>
-                    <span class="small fw-bold">{{ customer['loyalty_points'] }}/{{ loyalty_threshold }} pts</span>
-                </div>
-                <div class="progress mb-2">
-                    <div class="progress-bar" role="progressbar" style="width: {{ progress }}%;"></div>
-                </div>
-                <div class="extra-small text-muted" style="font-size: 11px;">
-                    {{ loyalty_threshold - customer['loyalty_points'] }} more regular visits for a free wash.
-                </div>
-                {% endif %}
             </div>
         </div>
 
