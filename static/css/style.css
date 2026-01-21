@@ -57,9 +57,13 @@ body {
     color: #fff;
     transition: all 0.3s;
     height: 100vh;
-    position: sticky;
+    position: fixed;
+    /* Changed from sticky to fixed for absolute stability */
     top: 0;
-    z-index: 1000;
+    left: 0;
+    bottom: 0;
+    z-index: 1001;
+    /* Higher than navbar to ensure full pillar look */
     display: flex;
     flex-direction: column;
 }
@@ -143,7 +147,9 @@ body {
     flex-direction: column;
     background: #f8fafc;
     padding-top: var(--header-height);
-    /* Ensure content starts below the fixed navbar */
+    margin-left: 250px;
+    /* Added margin to respect the fixed sidebar */
+    transition: all 0.3s;
 }
 
 .row {
@@ -202,6 +208,10 @@ body {
     left: 250px;
     z-index: 1000;
     transition: all 0.3s;
+}
+
+#sidebar.collapsed+#content {
+    margin-left: 80px;
 }
 
 #sidebar.collapsed+#content .navbar {
