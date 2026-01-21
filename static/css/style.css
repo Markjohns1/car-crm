@@ -133,6 +133,8 @@ body {
     display: flex;
     flex-direction: column;
     background: #f8fafc;
+    padding-top: 72px;
+    /* Ensure content starts below the fixed navbar */
 }
 
 .row {
@@ -182,9 +184,16 @@ body {
     background: #fff !important;
     border-bottom: 1px solid var(--border);
     padding: 16px 24px;
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 999;
+    right: 0;
+    left: 250px;
+    z-index: 1000;
+    transition: all 0.3s;
+}
+
+#sidebar.collapsed+#content .navbar {
+    left: 80px;
 }
 
 #sidebarCollapse {
@@ -454,6 +463,7 @@ body {
 
     .navbar {
         padding: 12px 15px;
+        left: 0 !important;
     }
 
     .stat-card {
