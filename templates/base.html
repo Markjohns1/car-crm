@@ -24,7 +24,8 @@
 <body>
     <div class="wrapper">
         {% if user %}
-        <!-- Sidebar Navigation -->
+        <!-- [BLOCK] SIDEBAR NAVIGATION -->
+        <!-- Contains the main logo and primary links -->
         <nav id="sidebar">
             <div class="sidebar-header py-4">
                 <div class="h4 mb-0 fw-bold tracking-tight text-white">
@@ -101,7 +102,8 @@
         <!-- Page Content -->
         <div id="content" {% if not user %}style="margin-left: 0; width: 100%;" {% endif %}>
             {% if user %}
-            <!-- Top Navigation Bar -->
+            <!-- [BLOCK] TOP NAVIGATION BAR -->
+            <!-- Fixed at top: Contains sidebar toggle, logo, and profile dropdown -->
             <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
                     <button type="button" id="sidebarCollapse" class="d-none d-md-block">
@@ -150,7 +152,8 @@
             </nav>
             {% endif %}
 
-            <!-- Flash Messages -->
+            <!-- [BLOCK] SYSTEM NOTIFICATIONS -->
+            <!-- Displays success/error alerts to the user -->
             <div class="container-fluid mt-3">
                 {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}

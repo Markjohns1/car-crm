@@ -496,7 +496,8 @@ body {
         padding-bottom: 0.6rem;
     }
 
-    /* Table & Container Freedom */
+    /* [MOBILE FIX] VIEWPORT FREEDOM */
+    /* Removes restrictive card borders/padding so table fills screen without scrolling */
     .card {
         border: none !important;
         box-shadow: none !important;
@@ -507,6 +508,8 @@ body {
         padding: 0 !important;
     }
 
+    /* [MOBILE FIX] ACTION MENUS */
+    /* Prevents dropdowns from being cut off by high table container */
     .table-responsive {
         border: none !important;
         overflow: visible !important;

@@ -19,7 +19,8 @@
                 <input type="hidden" id="loyalty_threshold_val" value="{{ loyalty_threshold }}">
 
                 <form method="POST" action="{{ url_for('checkin') }}">
-                    <!-- Step 1: Select Customer -->
+                    <!-- [STEP 1] SELECT CUSTOMER -->
+                    <!-- Provides a dropdown of existing customers with loyalty status -->
                     <div class="mb-4">
                         <label class="form-label fw-semibold small text-uppercase">1. Select Customer</label>
                         <select name="customer_id" class="form-select" required id="customerSelect">
@@ -59,7 +60,8 @@
                         </div>
                     </div>
 
-                    <!-- Step 2: Select Service -->
+                    <!-- [STEP 2] SELECT SERVICE -->
+                    <!-- Grid of service cards with prices and durations -->
                     <div class="mb-4">
                         <label class="form-label fw-semibold small text-uppercase">2. Select Service</label>
                         <div class="row g-3">
@@ -143,7 +145,8 @@
         </div>
     </div>
 
-    <!-- Info Sidebar -->
+    <!-- [SECTION] CHECK-IN GUIDE & INFO -->
+    <!-- Helpful tips for the manager during the check-in process -->
     <div class="col-lg-4">
         <div class="card mb-4">
             <div class="card-header bg-light">
@@ -171,6 +174,8 @@
 {% endblock %}
 
 {% block scripts %}
+<!-- [LOGIC] DYNAMIC UI HANDLERS -->
+<!-- Manages loyalty rewards, service card selection, and UI feedback -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const customerSelect = document.getElementById('customerSelect');

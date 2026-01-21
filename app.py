@@ -246,7 +246,7 @@ def profile():
 
 
 # =============================================================================
-# UTILITY FUNCTIONS
+# UTILITY FUNCTIONS: DASHBOARD ANALYTICS
 # =============================================================================
 def get_dashboard_stats():
     """
@@ -728,8 +728,10 @@ def api_search_customer():
 
 
 # =============================================================================
-# APPLICATION ENTRY POINT
+# APPLICATION ENTRY POINT: SERVER BOOTSTRAP
 # =============================================================================
 if __name__ == '__main__':
+    # Initialize the SQLite database schema if it doesn't exist
     init_db()
+    # Start the Flask development server on port 5000
     app.run(debug=True, port=5000)

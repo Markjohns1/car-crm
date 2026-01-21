@@ -25,6 +25,8 @@
 </div>
 
 <!-- Customer Table -->
+<!-- [SECTION] CUSTOMER DATABASE TABLE -->
+<!-- Responsive table showing core customer profile data -->
 <div class="card">
     <div class="card-body p-0">
         <div class="table-responsive">
@@ -70,7 +72,8 @@
                         <td class="fw-bold d-none d-lg-table-cell">KES {{ '{:,.0f}'.format(customer['total_spent']) }}
                         </td>
                         <td class="text-end pe-4">
-                            <!-- Desktop Actions -->
+                            <!-- [SUB-BLOCK] ACTIONS: DESKTOP VIEW -->
+                            <!-- Direct buttons for View, Edit, and Check-In -->
                             <div class="d-none d-md-flex justify-content-end gap-2">
                                 <a href="{{ url_for('customer_detail', customer_id=customer['id']) }}"
                                     class="btn btn-sm btn-outline-dark" title="View Profile">
@@ -86,7 +89,8 @@
                                 </a>
                             </div>
 
-                            <!-- Mobile Actions -->
+                            <!-- [SUB-BLOCK] ACTIONS: MOBILE VIEW -->
+                            <!-- Space-saving 3-dots dropdown menu -->
                             <div class="d-md-none dropdown">
                                 <button class="btn btn-sm btn-outline-dark" type="button" data-bs-toggle="dropdown"
                                     aria-expanded="false">
