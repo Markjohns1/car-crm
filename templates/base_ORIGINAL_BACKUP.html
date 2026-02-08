@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SafiWash CRM{% endblock %}</title>
+
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="wrapper">
+        {% if user %}
+        <!-- [BLOCK] SIDEBAR NAVIGATION -->
+        <!-- Contains the main logo and primary links -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <div class="h4 mb-0 fw-bold tracking-tight text-white">
+                    SafiWash <span class="text-primary">CRM</span>
+                </div>
+                <div class="text-primary-light extra-small text-uppercase fw-bold opacity-50"
+                    style="letter-spacing: 1px;">Management Portal</div>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="{% if request.endpoint == 'dashboard' %}active{% endif %}">
+                    <a href="{{ url_for('dashboard') }}">
+                        <i class="fas fa-chart-pie"></i>
+                        <span class="link-text">Dashboard</span>
+                    </a>
+                </li>
+                <li
+                    class="{% if request.endpoint in ['customers', 'customer_detail', 'add_customer', 'edit_customer'] %}active{% endif %}">
+                    <a href="{{ url_for('customers') }}">
+                        <i class="fas fa-users"></i>
+                        <span class="link-text">Customers</span>
+                    </a>
+                </li>
+                <li class="{% if request.endpoint == 'checkin' %}active{% endif %}">
+                    <a href="{{ url_for('checkin') }}">
+                        <i class="fas fa-plus-circle"></i>
+                        <span class="link-text">Check-In</span>
+                    </a>
+                </li>
+                <li class="{% if request.endpoint in ['services', 'add_service', 'edit_service'] %}active{% endif %}">
+                    <a href="{{ url_for('services') }}">
+                        <i class="fas fa-tag"></i>
+                        <span class="link-text">Services</span>
+                    </a>
+                </li>
+                <li class="{% if request.endpoint == 'reports' %}active{% endif %}">
+                    <a href="{{ url_for('reports') }}">
+                        <i class="fas fa-chart-bar"></i>
+                        <span class="link-text">Reports</span>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Sidebar Account Section -->
+            <div class="sidebar-footer border-top p-3 mt-auto dropdown" style="cursor: pointer;">
+                <div class="d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="bg-primary rounded-circle me-2 d-flex align-items-center justify-content-center"
+                        style="width: 35px; height: 35px;">
+                        <span class="text-white small fw-bold">{{ user.full_name[0]|upper }}</span>
+                    </div>
+                    <div class="flex-grow-1 overflow-hidden">
+                        <div class="text-white extra-small fw-bold text-truncate">{{ user.full_name }}</div>
+                        <div class="text-muted extra-small text-truncate" style="opacity: 0.95;">{{ user.role|capitalize
+                            }}</div>
+                    </div>
+                    <div class="text-muted ms-2">
+                        <i class="fas fa-chevron-up extra-small"></i>
+                    </div>
+                </div>
+                <ul class="dropdown-menu dropdown-menu-dark shadow border-0"
+                    style="font-size: 13px; width: calc(250px - 32px); margin-bottom: 5px;">
+                    <li><a class="dropdown-item py-2" href="{{ url_for('profile') }}"><i
+                                class="fas fa-user-cog me-2"></i>My Profile</a></li>
+                    <li>
+                        <hr class="dropdown-divider opacity-10">
+                    </li>
+                    <li><a class="dropdown-item py-2 text-danger" href="{{ url_for('logout') }}"><i
+                                class="fas fa-sign-out-alt me-2"></i>Sign Out</a></li>
+                </ul>
+            </div>
+        </nav>
+        {% endif %}
+
+        <!-- Page Content -->
+        <div id="content" {% if not user %}style="margin-left: 0; width: 100%;" {% endif %}>
+            {% if user %}
+            <!-- [BLOCK] TOP NAVIGATION BAR -->
+            <!-- Fixed at top: Contains sidebar toggle, logo, and profile dropdown -->
+            <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="d-none d-md-block">
+                        <i class="fas fa-bars"></i>
+                    </button>
+
+                    <!-- Top Bar Logo (Visible on mobile or when sidebar is collapsed) -->
+                    <div class="navbar-brand ms-3">
+                        <span class="fw-bold d-md-none" style="letter-spacing: -0.5px; font-size: 1.1rem;">
+                            SafiWash <span class="text-primary">CRM</span>
+                        </span>
+                    </div>
+
+                    <div class="ms-auto d-flex align-items-center">
+                        {% if user %}
+                        <div class="dropdown me-3">
+                            <a href="#" class="d-flex align-items-center text-decoration-none text-dark d-md-none"
+                                data-bs-toggle="dropdown">
+                                <div class="bg-dark rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width: 32px; height: 32px;">
+                                    <i class="fas fa-user text-white extra-small"></i>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="font-size: 13px;">
+                                <li class="px-3 py-2 border-bottom mb-1">
+                                    <div class="fw-bold">{{ user.full_name }}</div>
+                                    <div class="text-muted extra-small">{{ user.username }}</div>
+                                </li>
+                                <li><a class="dropdown-item py-2" href="{{ url_for('profile') }}"><i
+                                            class="fas fa-user-cog me-2"></i>Profile</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item py-2 text-danger" href="{{ url_for('logout') }}"><i
+                                            class="fas fa-sign-out-alt me-2"></i>Sign Out</a></li>
+                            </ul>
+                        </div>
+                        {% endif %}
+                        <span class="badge bg-secondary me-3 d-none d-sm-inline-block">v1.0</span>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-circle text-success small me-2" style="font-size: 8px;"></i>
+                            <span class="extra-small fw-semibold text-muted">Online</span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            {% endif %}
+
+            <!-- [BLOCK] SYSTEM NOTIFICATIONS -->
+            <!-- Displays success/error alerts to the user -->
+            <div class="container-fluid mt-3">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    <i class="fas fa-info-circle me-2"></i> {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="container-fluid p-4">
+                {% block content %}{% endblock %}
+            </div>
+
+            <!-- Footer -->
+            <footer class="text-center text-muted py-4 border-top">
+                <small>© 2026 SafiWash CRM • </small>
+            </footer>
+        </div>
+    </div>
+
+    {% if user %}
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <a href="{{ url_for('dashboard') }}" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">
+            <i class="fas fa-chart-pie"></i>
+            <span>Dash</span>
+        </a>
+        <a href="{{ url_for('customers') }}"
+            class="{% if request.endpoint in ['customers', 'customer_detail', 'add_customer', 'edit_customer'] %}active{% endif %}">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+        </a>
+        <a href="{{ url_for('checkin') }}" class="{% if request.endpoint == 'checkin' %}active{% endif %}">
+            <i class="fas fa-plus-circle"></i>
+            <span>Add</span>
+        </a>
+        <a href="{{ url_for('services') }}"
+            class="{% if request.endpoint in ['services', 'add_service', 'edit_service'] %}active{% endif %}">
+            <i class="fas fa-tag"></i>
+            <span>Service</span>
+        </a>
+        <a href="{{ url_for('reports') }}" class="{% if request.endpoint == 'reports' %}active{% endif %}">
+            <i class="fas fa-chart-bar"></i>
+            <span>Stats</span>
+        </a>
+    </nav>
+    {% endif %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>
