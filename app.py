@@ -42,6 +42,22 @@ load_dotenv()
 # =============================================================================
 app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'default_safiwash_key_2026')
+
+# =============================================================================
+# 🔒 PAYMENT LOCK - Remove this section after payment is received
+# =============================================================================
+PAYMENT_LOCK_ENABLED = True  # Set to False to unlock the app
+
+@app.before_request
+def check_payment_lock():
+    """Intercept ALL requests when payment lock is enabled."""
+    if PAYMENT_LOCK_ENABLED:
+        # Allow static files (CSS, JS) to load for the lock page styling
+        if request.path.startswith('/static/'):
+            return None
+        # Show the payment required page for everything else
+        return render_template('payment_required.html'), 402
+# =============================================================================
 DB_NAME = 'car_wash.db'
 
 # Loyalty threshold - number of visits required for a free wash
