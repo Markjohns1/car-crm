@@ -44,9 +44,9 @@ app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', 'default_safiwash_key_2026')
 
 # =============================================================================
-# 🔒 PAYMENT LOCK - Remove this section after payment is received
+# 🔒 PAYMENT LOCK - Set to False to unlock the app
 # =============================================================================
-PAYMENT_LOCK_ENABLED = True  # Set to False to unlock the app
+PAYMENT_LOCK_ENABLED = False  # Set to False to unlock the app
 
 @app.before_request
 def check_payment_lock():
